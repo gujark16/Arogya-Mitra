@@ -1,0 +1,1 @@
+Arogya Mitra is a QR-based digital health record system that stores patient medical data securely in one place. Doctors can access records instantly using a QR code, and patients receive medicine and appointment reminders, reducing paperwork and improving healthcare efficiency.
