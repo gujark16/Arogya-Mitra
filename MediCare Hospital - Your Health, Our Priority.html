@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<!-- saved from url=(0062)file:///C:/Users/ADMIN/Desktop/H/avishkar/index.html#reminders -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MediCare Hospital - Your Health, Our Priority</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode/1.5.3/qrcode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.min.js"></script>
+</head>
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-hospital"></i>
+                <span>MediCare</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link">Home</a></li>
+                <li><a href="#services" class="nav-link">Services</a></li>
+                <li><a href="#doctors" class="nav-link">Doctors</a></li>
+                <li><a href="#appointment" class="nav-link">Appointment</a></li>
+                <li><a href="dashboard.html" class="nav-link">Dashboard</a></li>
+                <li><a href="#patient-portal" class="nav-link">Patient Portal</a></li>
+                <li><a href="#reminders" class="nav-link">Reminders</a></li>
+                <li><a href="#contact" class="nav-link">Contact</a></li>
+            </ul>
+            <div class="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Welcome to MediCare Hospital</h1>
+            <p>Excellence in Healthcare, Compassion in Care</p>
+            <button class="btn btn-primary" onclick="scrollToSection('appointment')">Book Appointment</button>
+        </div>
+        <div class="hero-image">
+            <div class="hero-shape"></div>
+        </div>
+    </section>
+
+    <!-- Quick Stats -->
+    <section class="stats">
+        <div class="stat-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+            <div class="stat-icon">
+                <i class="fas fa-user-md"></i>
+            </div>
+            <h3>150+</h3>
+            <p>Expert Doctors</p>
+        </div>
+        <div class="stat-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+            <div class="stat-icon">
+                <i class="fas fa-bed"></i>
+            </div>
+            <h3>500+</h3>
+            <p>Hospital Beds</p>
+        </div>
+        <div class="stat-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+            <div class="stat-icon">
+                <i class="fas fa-heart"></i>
+            </div>
+            <h3>25K+</h3>
+            <p>Happy Patients</p>
+        </div>
+        <div class="stat-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+            <div class="stat-icon">
+                <i class="fas fa-award"></i>
+            </div>
+            <h3>20+</h3>
+            <p>Years Experience</p>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="services">
+        <div class="section-header">
+            <h2>Our Services</h2>
+            <p>Comprehensive healthcare solutions for you and your family</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-heartbeat"></i>
+                </div>
+                <h3>Cardiology</h3>
+                <p>Expert cardiac care with state-of-the-art equipment and experienced cardiologists.</p>
+            </div>
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Neurology</h3>
+                <p>Specialized treatment for neurological disorders and brain health.</p>
+            </div>
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-bone"></i>
+                </div>
+                <h3>Orthopedics</h3>
+                <p>Complete orthopedic care including surgery and rehabilitation.</p>
+            </div>
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-lungs"></i>
+                </div>
+                <h3>Pulmonology</h3>
+                <p>Respiratory care and treatment for lung-related conditions.</p>
+            </div>
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-eye"></i>
+                </div>
+                <h3>Ophthalmology</h3>
+                <p>Vision care and eye surgery with latest technology.</p>
+            </div>
+            <div class="service-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="service-icon">
+                    <i class="fas fa-tooth"></i>
+                </div>
+                <h3>Dentistry</h3>
+                <p>Comprehensive dental care and cosmetic dentistry services.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors" class="doctors">
+        <div class="section-header">
+            <h2>Meet Our Doctors</h2>
+            <p>Highly qualified and experienced medical professionals</p>
+        </div>
+        <div class="doctors-grid">
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-1"></div>
+                </div>
+                <h3>Dr. Sarah Johnson</h3>
+                <p class="specialty">Cardiologist</p>
+                <p class="experience">15 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-2"></div>
+                </div>
+                <h3>Dr. Michael Chen</h3>
+                <p class="specialty">Neurologist</p>
+                <p class="experience">12 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-3"></div>
+                </div>
+                <h3>Dr. Emily Rodriguez</h3>
+                <p class="specialty">Orthopedic Surgeon</p>
+                <p class="experience">10 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-4"></div>
+                </div>
+                <h3>Dr. James Wilson</h3>
+                <p class="specialty">Pulmonologist</p>
+                <p class="experience">18 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-5"></div>
+                </div>
+                <h3>Dr. Lisa Anderson</h3>
+                <p class="specialty">Ophthalmologist</p>
+                <p class="experience">14 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                </div>
+            </div>
+            <div class="doctor-card" style="opacity: 0; transform: translateY(20px); transition: opacity 0.6s, transform 0.6s;">
+                <div class="doctor-image">
+                    <div class="avatar avatar-6"></div>
+                </div>
+                <h3>Dr. Robert Martinez</h3>
+                <p class="specialty">Dentist</p>
+                <p class="experience">11 years experience</p>
+                <div class="doctor-rating">
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star"></i>
+                    <i class="fas fa-star-half-alt"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Section -->
+    <section id="appointment" class="appointment">
+        <div class="appointment-container">
+            <div class="appointment-header">
+                <h2>Book Your Appointment</h2>
+                <p>Schedule a consultation with our expert doctors</p>
+            </div>
+            <form class="appointment-form" id="appointmentForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" name="name" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" name="email" required="">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required="">
+                    </div>
+                    <div class="form-group">
+                        <label for="doctor">Select Doctor</label>
+                        <select id="doctor" name="doctor" required="">
+                            <option value="">Choose a doctor</option>
+                            <option value="Dr. Sarah Johnson">Dr. Sarah Johnson - Cardiologist</option>
+                            <option value="Dr. Michael Chen">Dr. Michael Chen - Neurologist</option>
+                            <option value="Dr. Emily Rodriguez">Dr. Emily Rodriguez - Orthopedic Surgeon</option>
+                            <option value="Dr. James Wilson">Dr. James Wilson - Pulmonologist</option>
+                            <option value="Dr. Lisa Anderson">Dr. Lisa Anderson - Ophthalmologist</option>
+                            <option value="Dr. Robert Martinez">Dr. Robert Martinez - Dentist</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="date">Preferred Date</label>
+                        <input type="date" id="date" name="date" required="" min="2025-11-30">
+                    </div>
+                    <div class="form-group">
+                        <label for="time">Preferred Time</label>
+                        <input type="time" id="time" name="time" required="">
+                    </div>
+                </div>
+                <div class="form-group full-width">
+                    <label for="message">Additional Notes</label>
+                    <textarea id="message" name="message" rows="4" placeholder="Describe your symptoms or concerns..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary full-width">Book Appointment</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Patient Portal Section -->
+    <section id="patient-portal" class="patient-portal">
+        <div class="section-header">
+            <h2>Patient Portal</h2>
+            <p>Register, manage your profile, and access your medical reports</p>
+        </div>
+        <div class="patient-portal-container">
+            <div class="patient-tabs">
+                <button class="patient-tab-btn" onclick="switchPatientTab('register', event)">
+                    <i class="fas fa-user-plus"></i> Register
+                </button>
+                <button class="patient-tab-btn" onclick="switchPatientTab('profile', event)">
+                    <i class="fas fa-id-card"></i> My Profile
+                </button>
+                <button class="patient-tab-btn active" onclick="switchPatientTab('reports', event)">
+                    <i class="fas fa-file-medical"></i> My Reports
+                </button>
+            </div>
+
+            <!-- Registration Tab -->
+            <div id="register-tab" class="patient-tab-content">
+                <form class="patient-form" id="patientRegistrationForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientFirstName">First Name</label>
+                            <input type="text" id="patientFirstName" placeholder="Enter first name" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="patientLastName">Last Name</label>
+                            <input type="text" id="patientLastName" placeholder="Enter last name" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientEmail">Email Address</label>
+                            <input type="email" id="patientEmail" placeholder="Enter email" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="patientPhone">Phone Number</label>
+                            <input type="tel" id="patientPhone" placeholder="Enter phone number" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientDOB">Date of Birth</label>
+                            <input type="date" id="patientDOB" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="patientGender">Gender</label>
+                            <select id="patientGender" required="">
+                                <option value="">Select gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="patientBloodGroup">Blood Group</label>
+                            <select id="patientBloodGroup" required="">
+                                <option value="">Select blood group</option>
+                                <option value="O+">O+</option>
+                                <option value="O-">O-</option>
+                                <option value="A+">A+</option>
+                                <option value="A-">A-</option>
+                                <option value="B+">B+</option>
+                                <option value="B-">B-</option>
+                                <option value="AB+">AB+</option>
+                                <option value="AB-">AB-</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientAddress">Address</label>
+                            <input type="text" id="patientAddress" placeholder="Enter address" required="">
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="patientMedicalHistory">Medical History</label>
+                        <textarea id="patientMedicalHistory" rows="3" placeholder="Any allergies, previous conditions, medications..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Register Patient</button>
+                </form>
+            </div>
+
+            <!-- Profile Tab -->
+            <div id="profile-tab" class="patient-tab-content">
+                <div id="profileContent" class="profile-content">
+        <div class="profile-card">
+            <div class="profile-info">
+                <h2>kndknn patild</h2>
+                <div class="profile-info-item">
+                    <i class="fas fa-id-card"></i>
+                    <div>
+                        <strong>Patient ID:</strong>
+                        <span>PAT-1764518667511-T30UHKHT3</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-envelope"></i>
+                    <div>
+                        <strong>Email:</strong>
+                        <span>sjhsls@gmail.com</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-phone"></i>
+                    <div>
+                        <strong>Phone:</strong>
+                        <span>1656738283</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-birthday-cake"></i>
+                    <div>
+                        <strong>Age:</strong>
+                        <span>0 years</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-venus-mars"></i>
+                    <div>
+                        <strong>Gender:</strong>
+                        <span>Female</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-droplet"></i>
+                    <div>
+                        <strong>Blood Group:</strong>
+                        <span>O+</span>
+                    </div>
+                </div>
+                <div class="profile-info-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <div>
+                        <strong>Address:</strong>
+                        <span>shirpur</span>
+                    </div>
+                </div>
+                
+                <div class="profile-info-item">
+                    <i class="fas fa-notes-medical"></i>
+                    <div>
+                        <strong>Medical History:</strong>
+                        <span>allergies</span>
+                    </div>
+                </div>
+                
+            </div>
+            <div class="qr-code-container">
+                <h4>Your Patient QR Code</h4>
+                <div id="qrCode" title="PAT-1764518667511-T30UHKHT3"><canvas width="200" height="200" style="display: none;"></canvas><img src="data:image/png;base64,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" style="display: block;"></div>
+                <div class="qr-code-actions">
+                    <button class="qr-btn" onclick="downloadQRCode()">
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="qr-btn" onclick="printQRCode()">
+                        <i class="fas fa-print"></i> Print
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+            </div>
+
+            <!-- Reports Tab -->
+            <div id="reports-tab" class="patient-tab-content active">
+                <div class="reports-section">
+                    <div class="add-report-form">
+                        <h3>Upload Medical Report</h3>
+                        <form id="reportForm">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="reportType">Report Type</label>
+                                    <select id="reportType" required="">
+                                        <option value="">Select report type</option>
+                                        <option value="Blood Test">Blood Test</option>
+                                        <option value="X-Ray">X-Ray</option>
+                                        <option value="CT Scan">CT Scan</option>
+                                        <option value="Ultrasound">Ultrasound</option>
+                                        <option value="ECG">ECG</option>
+                                        <option value="MRI">MRI</option>
+                                        <option value="Prescription">Prescription</option>
+                                        <option value="Other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="reportDate">Report Date</label>
+                                    <input type="date" id="reportDate" required="">
+                                </div>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="reportDescription">Description</label>
+                                <textarea id="reportDescription" rows="2" placeholder="Brief description of the report..."></textarea>
+                            </div>
+                            <div class="form-group full-width">
+                                <label for="reportFile">Upload File (PDF/Image)</label>
+                                <input type="file" id="reportFile" accept=".pdf,.jpg,.jpeg,.png" required="">
+                            </div>
+                            <button type="submit" class="btn btn-primary full-width">Upload Report</button>
+                        </form>
+                    </div>
+
+                    <div class="reports-list">
+                        <h3>Your Medical Reports</h3>
+                        <div id="reportsList" class="reports-items"><p class="empty-message">No reports uploaded yet. Upload your first report.</p></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Reminders Section -->
+    <section id="reminders" class="reminders">
+        <div class="section-header">
+            <h2>Health Reminders</h2>
+            <p>Manage your medicines and appointments with ease</p>
+        </div>
+        <div class="reminders-container">
+            <!-- Medicine Reminder Tab -->
+            <div class="reminder-tabs">
+                <button class="tab-btn active" onclick="switchTab('medicine', event)">
+                    <i class="fas fa-pills"></i> Medicine Reminder
+                </button>
+                <button class="tab-btn" onclick="switchTab('appointment', event)">
+                    <i class="fas fa-calendar-check"></i> Appointment Reminder
+                </button>
+            </div>
+
+            <!-- Medicine Reminder Content -->
+            <div id="medicine" class="tab-content active">
+                <form class="reminder-form" id="medicineForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="medicineName">Medicine Name</label>
+                            <input type="text" id="medicineName" placeholder="e.g., Aspirin, Paracetamol" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="medicineDosage">Dosage</label>
+                            <input type="text" id="medicineDosage" placeholder="e.g., 500mg, 1 tablet" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="medicineFrequency">Frequency</label>
+                            <select id="medicineFrequency" required="">
+                                <option value="">Select frequency</option>
+                                <option value="Once daily">Once daily</option>
+                                <option value="Twice daily">Twice daily</option>
+                                <option value="Three times daily">Three times daily</option>
+                                <option value="Every 4 hours">Every 4 hours</option>
+                                <option value="Every 6 hours">Every 6 hours</option>
+                                <option value="Every 8 hours">Every 8 hours</option>
+                                <option value="Every 12 hours">Every 12 hours</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="medicineTime">First Reminder Time</label>
+                            <input type="time" id="medicineTime" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="medicineStartDate">Start Date</label>
+                            <input type="date" id="medicineStartDate" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="medicineEndDate">End Date</label>
+                            <input type="date" id="medicineEndDate" required="">
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="medicineNotes">Notes</label>
+                        <textarea id="medicineNotes" rows="3" placeholder="e.g., Take with food, side effects..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Add Medicine Reminder</button>
+                </form>
+
+                <div class="reminders-list">
+                    <h3>Your Medicine Reminders</h3>
+                    <div id="medicineList" class="reminder-items"><p class="empty-message">No medicine reminders yet. Add one to get started!</p></div>
+                </div>
+            </div>
+
+            <!-- Appointment Reminder Content -->
+            <div id="appointment-reminder" class="tab-content">
+                <form class="reminder-form" id="appointmentReminderForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentDoctor">Doctor Name</label>
+                            <input type="text" id="appointmentDoctor" placeholder="e.g., Dr. Sarah Johnson" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentSpecialty">Specialty</label>
+                            <input type="text" id="appointmentSpecialty" placeholder="e.g., Cardiologist" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentDate">Appointment Date</label>
+                            <input type="date" id="appointmentDate" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="appointmentTime">Appointment Time</label>
+                            <input type="time" id="appointmentTime" required="">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="appointmentLocation">Location/Hospital</label>
+                            <input type="text" id="appointmentLocation" placeholder="e.g., MediCare Hospital" required="">
+                        </div>
+                        <div class="form-group">
+                            <label for="reminderBefore">Remind Me Before</label>
+                            <select id="reminderBefore" required="">
+                                <option value="15">15 minutes</option>
+                                <option value="30">30 minutes</option>
+                                <option value="60">1 hour</option>
+                                <option value="1440">1 day</option>
+                                <option value="2880">2 days</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="appointmentNotes">Notes</label>
+                        <textarea id="appointmentNotes" rows="3" placeholder="e.g., Bring reports, list of symptoms..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary full-width">Add Appointment Reminder</button>
+                </form>
+
+                <div class="reminders-list">
+                    <h3>Your Appointment Reminders</h3>
+                    <div id="appointmentList" class="reminder-items">
+            <div class="reminder-item appointment">
+                <div class="reminder-header">
+                    <div class="reminder-title">
+                        <i class="fas fa-user-md"></i> Dr. Dr.sara
+                    </div>
+                    <span class="reminder-badge badge-appointment">Completed</span>
+                </div>
+                <div class="reminder-details">
+                    <div class="detail-item">
+                        <i class="fas fa-stethoscope"></i>
+                        <span><strong>Specialty:</strong> cardiologist</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-calendar-alt"></i>
+                        <span><strong>Date:</strong> 2025-11-30</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-clock"></i>
+                        <span><strong>Time:</strong> 21:30</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span><strong>Location:</strong> medicare</span>
+                    </div>
+                    <div class="detail-item">
+                        <i class="fas fa-bell"></i>
+                        <span><strong>Reminder:</strong> 15 min before</span>
+                    </div>
+                </div>
+                <div class="detail-item"><i class="fas fa-sticky-note"></i> <span><strong>Notes:</strong> bring reports</span></div>
+                <div class="reminder-status">
+                    <div class="status-icon status-completed">
+                        ✓
+                    </div>
+                    <span>Completed</span>
+                </div>
+                <div class="reminder-actions">
+                    <button class="reminder-btn btn-mark-done" onclick="markAppointmentComplete(1764518086161)">
+                        <i class="fas fa-check"></i> Mark as Done
+                    </button>
+                    <button class="reminder-btn btn-delete" onclick="deleteAppointment(1764518086161)">
+                        <i class="fas fa-trash"></i> Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact">
+        <div class="section-header">
+            <h2>Get In Touch</h2>
+            <p>We're here to help and answer any questions you might have</p>
+        </div>
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Address</h3>
+                        <p>123 Medical Plaza, Healthcare City<br>New York, NY 10001</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-phone"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Phone</h3>
+                        <p>+1 (555) 123-4567<br>+1 (555) 987-6543</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-envelope"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Email</h3>
+                        <p>info@medicare.com<br>support@medicare.com</p>
+                    </div>
+                </div>
+                <div class="contact-item">
+                    <div class="contact-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="contact-details">
+                        <h3>Working Hours</h3>
+                        <p>Mon - Fri: 8:00 AM - 8:00 PM<br>Sat - Sun: 9:00 AM - 5:00 PM</p>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-form-wrapper">
+                <form class="contact-form" id="contactForm">
+                    <div class="form-group">
+                        <input type="text" placeholder="Your Name" required="">
+                    </div>
+                    <div class="form-group">
+                        <input type="email" placeholder="Your Email" required="">
+                    </div>
+                    <div class="form-group">
+                        <textarea placeholder="Your Message" rows="5" required=""></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- QR Scanner Section -->
+    <section id="qr-scanner" class="qr-scanner-section">
+        <div class="section-header">
+            <h2>QR Code Scanner</h2>
+            <p>Scan a patient's QR code to view their medical records</p>
+        </div>
+        <div class="scanner-container">
+            <div class="scanner-content">
+                <div class="scanner-tabs">
+                    <button class="scanner-tab-btn active" onclick="switchScannerTab('camera', event)">
+                        <i class="fas fa-camera"></i> Scan QR Code
+                    </button>
+                    <button class="scanner-tab-btn" onclick="switchScannerTab('manual', event)">
+                        <i class="fas fa-keyboard"></i> Enter Patient ID
+                    </button>
+                </div>
+
+                <!-- Camera Scanner Tab -->
+                <div id="camera-tab" class="scanner-tab-content active">
+                    <div class="camera-container">
+                        <video id="qrVideo" class="qr-video"></video>
+                        <canvas id="qrCanvas" style="display: none;"></canvas>
+                        <div class="scanner-overlay">
+                            <div class="scanner-frame"></div>
+                            <p>Position QR code within the frame</p>
+                        </div>
+                        <button class="btn btn-primary" onclick="startQRScanner(event)">
+                            <i class="fas fa-play"></i> Start Camera
+                        </button>
+                        <button class="btn btn-secondary" onclick="stopQRScanner()" style="display: none;" id="stopScannerBtn">
+                            <i class="fas fa-stop"></i> Stop Camera
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Manual Entry Tab -->
+                <div id="manual-tab" class="scanner-tab-content">
+                    <div class="manual-entry">
+                        <div class="form-group">
+                            <label for="patientIdInput">Enter Patient ID</label>
+                            <input type="text" id="patientIdInput" placeholder="e.g., PAT-1234567890-ABC123" required="">
+                        </div>
+                        <button class="btn btn-primary" onclick="searchPatientById()">
+                            <i class="fas fa-search"></i> Search Patient
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patient Records Display -->
+            <div id="scannedPatientRecords" class="scanned-patient-records" style="display: none;">
+                <div class="records-header">
+                    <h3>Patient Medical Records</h3>
+                    <button class="btn-close-records" onclick="closePatientRecords()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                <div id="recordsContent" class="records-content"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>MediCare Hospital</h3>
+                <p>Providing excellent healthcare services with compassion and expertise.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#doctors">Doctors</a></li>
+                    <li><a href="#appointment">Appointment</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Follow Us</h3>
+                <div class="social-links">
+                    <a href="#" onclick="return false;"><i class="fab fa-facebook"></i></a>
+                    <a href="#" onclick="return false;"><i class="fab fa-twitter"></i></a>
+                    <a href="#" onclick="return false;"><i class="fab fa-instagram"></i></a>
+                    <a href="#" onclick="return false;"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2024 MediCare Hospital. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Notification Modal -->
+    <div id="notificationModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close">×</span>
+            <h2 id="modalTitle">Registration Successful!</h2>
+            <p id="modalMessage">Welcome kndknn patild!
+
+Your Patient ID: PAT-1764518667511-T30UHKHT3
+
+Your unique QR code has been generated. You can view it in the Profile tab.</p>
+            <button class="btn btn-primary" onclick="closeModal()">Close</button>
+        </div>
+    </div>
+
+    <script src="js/script.js"></script>
+
+
+</body></html>

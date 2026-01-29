@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Dashboard - Choose Your Role</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 20px 0;
+            text-align: center;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            font-weight: 300;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Main Dashboard */
+        .dashboard-container {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            max-width: 1000px;
+            width: 100%;
+        }
+
+        /* Role Cards */
+        .role-card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .role-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #667eea, #764ba2);
+        }
+
+        .role-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.2);
+        }
+
+        .role-icon {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+            position: relative;
+        }
+
+        .role-icon i {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .role-card h2 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 2rem;
+        }
+
+        .role-card p {
+            color: #666;
+            margin-bottom: 25px;
+            line-height: 1.6;
+        }
+
+        .role-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+
+        .role-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            animation: fadeIn 0.3s ease;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .modal-content {
+            background: white;
+            margin: 50px auto;
+            padding: 0;
+            width: 90%;
+            max-width: 500px;
+            border-radius: 20px;
+            overflow: hidden;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .modal-header h2 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+
+        .close {
+            position: absolute;
+            right: 20px;
+            top: 20px;
+            font-size: 2rem;
+            cursor: pointer;
+            color: white;
+            transition: transform 0.3s ease;
+        }
+
+        .close:hover {
+            transform: rotate(90deg);
+        }
+
+        .modal-body {
+            padding: 40px;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        /* Tab Navigation */
+        .tab-nav {
+            display: flex;
+            margin-bottom: 30px;
+            background: #f8f9fa;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        .tab-btn {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            background: transparent;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            color: #666;
+        }
+
+        .tab-btn.active {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+            min-height: 300px;
+            position: relative;
+        }
+
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.3s ease;
+        }
+
+        /* Form Styles */
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #333;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            display: block !important;
+            visibility: visible !important;
+            position: relative;
+            z-index: 10;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .dashboard {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .role-card {
+                padding: 30px 20px;
+            }
+
+            .modal-content {
+                margin: 20px;
+                width: calc(100% - 40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <h1><i class="fas fa-hospital"></i> Medical Dashboard</h1>
+        <p>Choose your role to access the appropriate portal</p>
+    </header>
+
+    <!-- Main Dashboard -->
+    <main class="dashboard-container">
+        <div class="dashboard">
+            <!-- Patient Card -->
+            <div class="role-card" onclick="openModal('patient')">
+                <div class="role-icon">
+                    <i class="fas fa-user-injured"></i>
+                </div>
+                <h2>Patient</h2>
+                <p>Access your medical records, book appointments, and manage your health information</p>
+                <button class="role-btn">
+                    <i class="fas fa-arrow-right"></i> Continue as Patient
+                </button>
+            </div>
+
+            <!-- Doctor Card -->
+            <div class="role-card" onclick="openModal('doctor')">
+                <div class="role-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h2>Doctor</h2>
+                <p>Manage appointments, view patient records, and access medical resources</p>
+                <button class="role-btn">
+                    <i class="fas fa-arrow-right"></i> Continue as Doctor
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Patient Modal -->
+    <div id="patientModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('patient')">&times;</span>
+                <h2><i class="fas fa-user-injured"></i> Patient Portal</h2>
+            </div>
+            <div class="modal-body">
+                <div class="tab-nav">
+                    <button class="tab-btn active" onclick="switchTab('patient', 'login')">Login</button>
+                    <button class="tab-btn" onclick="switchTab('patient', 'register')">Register</button>
+                </div>
+
+                <!-- Login Tab -->
+                <div id="patient-login" class="tab-content active">
+                    <form onsubmit="handleLogin(event, 'patient')">
+                        <div class="form-group">
+                            <label for="patient-email">Email Address</label>
+                            <input type="email" id="patient-email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-password">Password</label>
+                            <input type="password" id="patient-password" required placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login as Patient
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Tab -->
+                <div id="patient-register" class="tab-content">
+                    <form onsubmit="handleRegister(event, 'patient')">
+                        <div class="form-group">
+                            <label for="patient-fullname">Full Name</label>
+                            <input type="text" id="patient-fullname" required placeholder="Enter your full name">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-reg-email">Email Address</label>
+                            <input type="email" id="patient-reg-email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-phone">Phone Number</label>
+                            <input type="tel" id="patient-phone" required placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-reg-password">Password</label>
+                            <input type="password" id="patient-reg-password" required placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="patient-confirm-password">Confirm Password</label>
+                            <input type="password" id="patient-confirm-password" required placeholder="Confirm your password">
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-user-plus"></i> Register as Patient
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Doctor Modal -->
+    <div id="doctorModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="close" onclick="closeModal('doctor')">&times;</span>
+                <h2><i class="fas fa-user-md"></i> Doctor Portal</h2>
+            </div>
+            <div class="modal-body">
+                <div class="tab-nav">
+                    <button class="tab-btn active" onclick="switchTab('doctor', 'login')">Login</button>
+                    <button class="tab-btn" onclick="switchTab('doctor', 'register')">Register</button>
+                </div>
+
+                <!-- Login Tab -->
+                <div id="doctor-login" class="tab-content active">
+                    <form onsubmit="handleLogin(event, 'doctor')">
+                        <div class="form-group">
+                            <label for="doctor-email">Email Address</label>
+                            <input type="email" id="doctor-email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-password">Password</label>
+                            <input type="password" id="doctor-password" required placeholder="Enter your password">
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-sign-in-alt"></i> Login as Doctor
+                        </button>
+                    </form>
+                </div>
+
+                <!-- Register Tab -->
+                <div id="doctor-register" class="tab-content">
+                    <form onsubmit="handleRegister(event, 'doctor')">
+                        <div class="form-group">
+                            <label for="doctor-fullname">Full Name</label>
+                            <input type="text" id="doctor-fullname" required placeholder="Dr. John Smith">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-specialty">Specialty</label>
+                            <select id="doctor-specialty" required>
+                                <option value="">Select your specialty</option>
+                                <option value="Cardiologist">Cardiologist</option>
+                                <option value="Neurologist">Neurologist</option>
+                                <option value="Orthopedic Surgeon">Orthopedic Surgeon</option>
+                                <option value="Pulmonologist">Pulmonologist</option>
+                                <option value="Ophthalmologist">Ophthalmologist</option>
+                                <option value="Dentist">Dentist</option>
+                                <option value="General Physician">General Physician</option>
+                                <option value="Pediatrician">Pediatrician</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-reg-email">Email Address</label>
+                            <input type="email" id="doctor-reg-email" required placeholder="Enter your email">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-phone">Phone Number</label>
+                            <input type="tel" id="doctor-phone" required placeholder="Enter your phone number">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-reg-password">Password</label>
+                            <input type="password" id="doctor-reg-password" required placeholder="Create a password">
+                        </div>
+                        <div class="form-group">
+                            <label for="doctor-confirm-password">Confirm Password</label>
+                            <input type="password" id="doctor-confirm-password" required placeholder="Confirm your password">
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            <i class="fas fa-user-plus"></i> Register as Doctor
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal Functions
+        function openModal(role) {
+            const modal = document.getElementById(role + 'Modal');
+            modal.style.display = 'block';
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal(role) {
+            const modal = document.getElementById(role + 'Modal');
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        }
+
+        // Tab Switching
+        function switchTab(role, tab) {
+            // Remove active class from all tabs and contents
+            const modal = document.getElementById(role + 'Modal');
+            const tabBtns = modal.querySelectorAll('.tab-btn');
+            const tabContents = modal.querySelectorAll('.tab-content');
+            
+            tabBtns.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            // Add active class to selected tab and content
+            event.target.classList.add('active');
+            document.getElementById(role + '-' + tab).classList.add('active');
+        }
+
+        // Form Handlers
+        function handleLogin(event, role) {
+            event.preventDefault();
+            
+            const email = document.getElementById(role + '-email').value;
+            const password = document.getElementById(role + '-password').value;
+            
+            // Simple validation (in real app, this would be server-side)
+            if (email && password) {
+                // Store login info in sessionStorage
+                sessionStorage.setItem('userRole', role);
+                sessionStorage.setItem('userEmail', email);
+                sessionStorage.setItem('isLoggedIn', 'true');
+                
+                alert(`Welcome ${role}! You have successfully logged in.\nEmail: ${email}`);
+                closeModal(role);
+                
+                // Redirect to role-specific dashboard
+                if (role === 'patient') {
+                    window.location.href = 'patient-dashboard.html';
+                } else if (role === 'doctor') {
+                    window.location.href = 'doctor-dashboard-new.html';
+                }
+            }
+        }
+
+        function handleRegister(event, role) {
+            event.preventDefault();
+            
+            const fullname = document.getElementById(role + '-fullname').value;
+            const email = document.getElementById(role + '-reg-email').value;
+            const phone = document.getElementById(role + '-phone').value;
+            const password = document.getElementById(role + '-reg-password').value;
+            const confirmPassword = document.getElementById(role + '-confirm-password').value;
+            
+            // Validation
+            if (password !== confirmPassword) {
+                alert('Passwords do not match!');
+                return;
+            }
+            
+            if (password.length < 6) {
+                alert('Password must be at least 6 characters long!');
+                return;
+            }
+            
+            // Store registration info in sessionStorage
+            sessionStorage.setItem('userRole', role);
+            sessionStorage.setItem('userName', fullname);
+            sessionStorage.setItem('userEmail', email);
+            sessionStorage.setItem('userPhone', phone);
+            sessionStorage.setItem('isLoggedIn', 'true');
+            
+            if (role === 'doctor') {
+                const specialty = document.getElementById('doctor-specialty').value;
+                sessionStorage.setItem('userSpecialty', specialty);
+            }
+            
+            // Success message
+            let message = `Registration successful!\n\n`;
+            message += `Name: ${fullname}\n`;
+            message += `Email: ${email}\n`;
+            message += `Phone: ${phone}\n`;
+            
+            if (role === 'doctor') {
+                const specialty = document.getElementById('doctor-specialty').value;
+                message += `Specialty: ${specialty}\n`;
+            }
+            
+            alert(message);
+            closeModal(role);
+            
+            // Redirect to role-specific dashboard
+            if (role === 'patient') {
+                window.location.href = 'patient-dashboard.html';
+            } else if (role === 'doctor') {
+                window.location.href = 'doctor-dashboard-new.html';
+            }
+        }
+
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        }
+
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                const modals = document.querySelectorAll('.modal');
+                modals.forEach(modal => {
+                    if (modal.style.display === 'block') {
+                        modal.style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

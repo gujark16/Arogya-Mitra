@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lab Test - MediCare Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header-left h1 {
+            color: #2c3e50;
+            font-size: 2rem;
+            margin-bottom: 5px;
+        }
+
+        .header-left p {
+            color: #666;
+            font-size: 1rem;
+        }
+
+        .back-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .back-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .test-categories {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .section-title {
+            color: #2c3e50;
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+
+        .category-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .category-card:hover .category-icon {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .category-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            font-size: 1.5rem;
+            color: white;
+        }
+
+        .category-card h3 {
+            color: #2c3e50;
+            margin-bottom: 8px;
+            font-size: 1.1rem;
+        }
+
+        .category-card:hover h3 {
+            color: white;
+        }
+
+        .category-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .category-card:hover p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .test-list {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .test-item {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+
+        .test-item:hover {
+            background: #e9ecef;
+            transform: translateX(5px);
+        }
+
+        .test-info h4 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+            font-size: 1.1rem;
+        }
+
+        .test-info p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .test-price {
+            text-align: right;
+        }
+
+        .price {
+            color: #667eea;
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .book-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .book-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .booking-section {
+            grid-column: 1 / -1;
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            display: none;
+        }
+
+        .booking-section.active {
+            display: block;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            color: #2c3e50;
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .selected-tests {
+            background: #f8f9fa;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .selected-test-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .selected-test-item:last-child {
+            border-bottom: none;
+        }
+
+        .remove-btn {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.8rem;
+        }
+
+        .total-price {
+            text-align: right;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+            margin-bottom: 20px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            width: 100%;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .category-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            header {
+                flex-direction: column;
+                gap: 20px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="header-left">
+                <h1><i class="fas fa-flask"></i> Lab Test Services</h1>
+                <p>Comprehensive diagnostic testing at MediCare Hospital</p>
+            </div>
+            <a href="patient-dashboard.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Back to Dashboard
+            </a>
+        </header>
+
+        <div class="main-content">
+            <!-- Test Categories -->
+            <div class="test-categories">
+                <h2 class="section-title">
+                    <i class="fas fa-th-large"></i> Test Categories
+                </h2>
+                <div class="category-grid">
+                    <div class="category-card" onclick="showTests('blood')">
+                        <div class="category-icon">
+                            <i class="fas fa-tint"></i>
+                        </div>
+                        <h3>Blood Tests</h3>
+                        <p>CBC, Lipid Profile, Blood Sugar</p>
+                    </div>
+                    <div class="category-card" onclick="showTests('urine')">
+                        <div class="category-icon">
+                            <i class="fas fa-vial"></i>
+                        </div>
+                        <h3>Urine Tests</h3>
+                        <p>Urine Routine, Culture, Microscopy</p>
+                    </div>
+                    <div class="category-card" onclick="showTests('imaging')">
+                        <div class="category-icon">
+                            <i class="fas fa-x-ray"></i>
+                        </div>
+                        <h3>Imaging</h3>
+                        <p>X-Ray, CT Scan, MRI, Ultrasound</p>
+                    </div>
+                    <div class="category-card" onclick="showTests('cardiac')">
+                        <div class="category-icon">
+                            <i class="fas fa-heartbeat"></i>
+                        </div>
+                        <h3>Cardiac</h3>
+                        <p>ECG, Echocardiogram, Stress Test</p>
+                    </div>
+                    <div class="category-card" onclick="showTests('pathology')">
+                        <div class="category-icon">
+                            <i class="fas fa-microscope"></i>
+                        </div>
+                        <h3>Pathology</h3>
+                        <p>Biopsy, Histopathology, Cytology</p>
+                    </div>
+                    <div class="category-card" onclick="showTests('hormone')">
+                        <div class="category-icon">
+                            <i class="fas fa-dna"></i>
+                        </div>
+                        <h3>Hormone Tests</h3>
+                        <p>Thyroid, Hormones, Genetic Tests</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Test List -->
+            <div class="test-list">
+                <h2 class="section-title">
+                    <i class="fas fa-list"></i> Available Tests
+                </h2>
+                <div id="testList">
+                    <div class="test-item">
+                        <div class="test-info">
+                            <h4>Complete Blood Count (CBC)</h4>
+                            <p>Comprehensive blood cell analysis</p>
+                        </div>
+                        <div class="test-price">
+                            <div class="price">₹500</div>
+                            <button class="book-btn" onclick="addTest('Complete Blood Count (CBC)', 500)">Book</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <h4>Lipid Profile</h4>
+                            <p>Cholesterol and triglycerides test</p>
+                        </div>
+                        <div class="test-price">
+                            <div class="price">₹800</div>
+                            <button class="book-btn" onclick="addTest('Lipid Profile', 800)">Book</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <h4>Blood Sugar (Fasting)</h4>
+                            <p>Glucose level test</p>
+                        </div>
+                        <div class="test-price">
+                            <div class="price">₹300</div>
+                            <button class="book-btn" onclick="addTest('Blood Sugar (Fasting)', 300)">Book</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <h4>Urine Routine</h4>
+                            <p>Complete urine analysis</p>
+                        </div>
+                        <div class="test-price">
+                            <div class="price">₹400</div>
+                            <button class="book-btn" onclick="addTest('Urine Routine', 400)">Book</button>
+                        </div>
+                    </div>
+                    <div class="test-item">
+                        <div class="test-info">
+                            <h4>Chest X-Ray</h4>
+                            <p>Radiographic imaging of chest</p>
+                        </div>
+                        <div class="test-price">
+                            <div class="price">₹600</div>
+                            <button class="book-btn" onclick="addTest('Chest X-Ray', 600)">Book</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Booking Section -->
+            <div class="booking-section" id="bookingSection">
+                <h2 class="section-title">
+                    <i class="fas fa-calendar-plus"></i> Book Your Tests
+                </h2>
+                
+                <div class="selected-tests">
+                    <h3>Selected Tests:</h3>
+                    <div id="selectedTestsList">
+                        <!-- Selected tests will be added here -->
+                    </div>
+                    <div class="total-price">
+                        Total Price: ₹<span id="totalPrice">0</span>
+                    </div>
+                </div>
+
+                <form id="labTestForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="patientName">Patient Name *</label>
+                            <input type="text" id="patientName" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientAge">Age *</label>
+                            <input type="number" id="patientAge" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientGender">Gender *</label>
+                            <select id="patientGender" required>
+                                <option value="">Select Gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="patientPhone">Phone Number *</label>
+                            <input type="tel" id="patientPhone" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="testDate">Preferred Date *</label>
+                            <input type="date" id="testDate" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="testTime">Preferred Time *</label>
+                            <select id="testTime" required>
+                                <option value="">Select Time</option>
+                                <option value="08:00">8:00 AM</option>
+                                <option value="09:00">9:00 AM</option>
+                                <option value="10:00">10:00 AM</option>
+                                <option value="11:00">11:00 AM</option>
+                                <option value="14:00">2:00 PM</option>
+                                <option value="15:00">3:00 PM</option>
+                                <option value="16:00">4:00 PM</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="doctorReferral">Doctor Referral (Optional)</label>
+                        <input type="text" id="doctorReferral" placeholder="Doctor name and hospital">
+                    </div>
+                    <div class="form-group">
+                        <label for="specialInstructions">Special Instructions</label>
+                        <textarea id="specialInstructions" rows="3" placeholder="Any special requirements or medical conditions"></textarea>
+                    </div>
+                    <button type="submit" class="submit-btn">
+                        <i class="fas fa-check"></i> Confirm Booking
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedTests = [];
+        let totalPrice = 0;
+
+        // Load patient data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadPatientData();
+            setupForm();
+        });
+
+        function loadPatientData() {
+            const userName = sessionStorage.getItem('userName') || sessionStorage.getItem('userEmail') || '';
+            const userPhone = sessionStorage.getItem('userPhone') || '';
+            
+            if (userName) document.getElementById('patientName').value = userName;
+            if (userPhone) document.getElementById('patientPhone').value = userPhone;
+        }
+
+        function showTests(category) {
+            const tests = {
+                blood: [
+                    { name: 'Complete Blood Count (CBC)', price: 500 },
+                    { name: 'Lipid Profile', price: 800 },
+                    { name: 'Blood Sugar (Fasting)', price: 300 },
+                    { name: 'Blood Sugar (PP)', price: 300 },
+                    { name: 'HbA1c', price: 600 },
+                    { name: 'Liver Function Test', price: 900 },
+                    { name: 'Kidney Function Test', price: 700 },
+                    { name: 'Thyroid Profile', price: 800 }
+                ],
+                urine: [
+                    { name: 'Urine Routine', price: 400 },
+                    { name: 'Urine Culture', price: 600 },
+                    { name: 'Urine Microscopy', price: 500 },
+                    { name: '24-Hour Protein', price: 800 }
+                ],
+                imaging: [
+                    { name: 'Chest X-Ray', price: 600 },
+                    { name: 'Abdomen X-Ray', price: 700 },
+                    { name: 'CT Scan (Head)', price: 3000 },
+                    { name: 'CT Scan (Abdomen)', price: 4000 },
+                    { name: 'MRI (Brain)', price: 8000 },
+                    { name: 'Ultrasound (Abdomen)', price: 1500 },
+                    { name: 'Ultrasound (Pelvis)', price: 1500 }
+                ],
+                cardiac: [
+                    { name: 'ECG', price: 400 },
+                    { name: 'Echocardiogram', price: 2500 },
+                    { name: 'Stress Test', price: 3000 },
+                    { name: 'Holter Monitoring', price: 4000 }
+                ],
+                pathology: [
+                    { name: 'Biopsy', price: 2000 },
+                    { name: 'Histopathology', price: 1500 },
+                    { name: 'Pap Smear', price: 800 },
+                    { name: 'FNAC', price: 1200 }
+                ],
+                hormone: [
+                    { name: 'TSH', price: 500 },
+                    { name: 'T3, T4', price: 800 },
+                    { name: 'Testosterone', price: 1000 },
+                    { name: 'Estrogen', price: 1000 },
+                    { name: 'Progesterone', price: 1000 }
+                ]
+            };
+
+            const testList = document.getElementById('testList');
+            testList.innerHTML = tests[category].map(test => `
+                <div class="test-item">
+                    <div class="test-info">
+                        <h4>${test.name}</h4>
+                        <p>Professional diagnostic testing</p>
+                    </div>
+                    <div class="test-price">
+                        <div class="price">₹${test.price}</div>
+                        <button class="book-btn" onclick="addTest('${test.name}', ${test.price})">Book</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function addTest(testName, testPrice) {
+            // Check if test already selected
+            if (selectedTests.find(test => test.name === testName)) {
+                alert('This test is already added to your booking.');
+                return;
+            }
+
+            selectedTests.push({ name: testName, price: testPrice });
+            updateSelectedTests();
+            
+            // Show booking section
+            document.getElementById('bookingSection').classList.add('active');
+            
+            // Scroll to booking section
+            document.getElementById('bookingSection').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function removeTest(index) {
+            selectedTests.splice(index, 1);
+            updateSelectedTests();
+        }
+
+        function updateSelectedTests() {
+            const selectedTestsList = document.getElementById('selectedTestsList');
+            const totalPriceElement = document.getElementById('totalPrice');
+            
+            if (selectedTests.length === 0) {
+                selectedTestsList.innerHTML = '<p>No tests selected</p>';
+                totalPrice = 0;
+            } else {
+                selectedTestsList.innerHTML = selectedTests.map((test, index) => `
+                    <div class="selected-test-item">
+                        <div>
+                            <strong>${test.name}</strong> - ₹${test.price}
+                        </div>
+                        <button class="remove-btn" onclick="removeTest(${index})">Remove</button>
+                    </div>
+                `).join('');
+                
+                totalPrice = selectedTests.reduce((sum, test) => sum + test.price, 0);
+            }
+            
+            totalPriceElement.textContent = totalPrice;
+        }
+
+        function setupForm() {
+            const form = document.getElementById('labTestForm');
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                if (selectedTests.length === 0) {
+                    alert('Please select at least one test.');
+                    return;
+                }
+                
+                // Get form data
+                const formData = {
+                    tests: selectedTests,
+                    totalPrice: totalPrice,
+                    patientName: document.getElementById('patientName').value,
+                    patientAge: document.getElementById('patientAge').value,
+                    patientGender: document.getElementById('patientGender').value,
+                    patientPhone: document.getElementById('patientPhone').value,
+                    testDate: document.getElementById('testDate').value,
+                    testTime: document.getElementById('testTime').value,
+                    doctorReferral: document.getElementById('doctorReferral').value,
+                    specialInstructions: document.getElementById('specialInstructions').value,
+                    bookingId: 'LAB-' + Date.now()
+                };
+                
+                // Store booking data
+                localStorage.setItem('labTestBooking', JSON.stringify(formData));
+                
+                // Show confirmation
+                alert(`Lab test booking confirmed!\n\nBooking ID: ${formData.bookingId}\nTotal Tests: ${selectedTests.length}\nTotal Price: ₹${totalPrice}\n\nPlease visit the lab on ${formData.testDate} at ${formData.testTime}.\n\nFor fasting tests, please avoid food and water for 8-12 hours before the test.`);
+                
+                // Reset form
+                form.reset();
+                selectedTests = [];
+                updateSelectedTests();
+                document.getElementById('bookingSection').classList.remove('active');
+                
+                // Redirect to dashboard
+                setTimeout(() => {
+                    window.location.href = 'patient-dashboard.html';
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>

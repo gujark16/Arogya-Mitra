@@ -1,0 +1,1483 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor Dashboard - MediCare Hospital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5f7fa;
+            color: #333;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar Styles */
+        .sidebar {
+            width: 280px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px 0;
+            position: fixed;
+            height: 100vh;
+            overflow-y: auto;
+            z-index: 1000;
+        }
+
+        .doctor-profile {
+            text-align: center;
+            padding: 0 20px 30px;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            margin-bottom: 30px;
+        }
+
+        .doctor-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: white;
+            margin: 0 auto 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #667eea;
+        }
+
+        .doctor-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .doctor-qualifications {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            line-height: 1.4;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 5px;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            padding: 15px 25px;
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background: rgba(255,255,255,0.1);
+            color: white;
+            border-left-color: white;
+        }
+
+        .sidebar-nav i {
+            width: 20px;
+            margin-right: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            margin-left: 280px;
+            padding: 20px;
+            overflow-y: auto;
+            max-height: 100vh;
+        }
+
+        .content-section {
+            display: none;
+        }
+
+        .content-section.active {
+            display: block;
+        }
+
+        .content-header {
+            background: white;
+            border-radius: 12px;
+            padding: 20px 30px;
+            margin-bottom: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .page-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .search-bar {
+            position: relative;
+        }
+
+        .search-bar input {
+            padding: 10px 40px 10px 15px;
+            border: 1px solid #e0e6ed;
+            border-radius: 25px;
+            width: 250px;
+            font-size: 0.9rem;
+        }
+
+        .search-bar i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #8492a6;
+        }
+
+        .header-icons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .icon-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f5f7fa;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .icon-btn:hover {
+            background: #e8ecf1;
+        }
+
+        .notification-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: #ff4757;
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* Summary Cards */
+        .summary-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .summary-info h3 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .summary-info p {
+            color: #8492a6;
+            font-size: 0.9rem;
+        }
+
+        .summary-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .icon-blue { background: linear-gradient(135deg, #667eea, #764ba2); color: white; }
+        .icon-green { background: linear-gradient(135deg, #00d2d3, #01a3a4); color: white; }
+        .icon-orange { background: linear-gradient(135deg, #feca57, #ff9ff3); color: white; }
+
+        /* Chart Card */
+        .chart-card {
+            grid-column: span 2;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .chart-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .chart-container {
+            height: 250px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-chart {
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: conic-gradient(
+                #667eea 0deg 120deg,
+                #ff9ff3 120deg 200deg,
+                #00d2d3 200deg 360deg
+            );
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .donut-chart::before {
+            content: '';
+            width: 120px;
+            height: 120px;
+            background: white;
+            border-radius: 50%;
+            position: absolute;
+        }
+
+        .chart-center {
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+
+        .chart-center h4 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .chart-center p {
+            color: #8492a6;
+            font-size: 0.9rem;
+        }
+
+        .chart-legend {
+            display: flex;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+
+        /* Appointment Table */
+        .appointment-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .appointment-table th {
+            text-align: left;
+            padding: 12px;
+            border-bottom: 2px solid #f5f7fa;
+            color: #8492a6;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+        }
+
+        .appointment-table td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #f5f7fa;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .status-ongoing {
+            background: #e8f5e8;
+            color: #27ae60;
+        }
+
+        .status-scheduled {
+            background: #fff3cd;
+            color: #f39c12;
+        }
+
+        /* Patient Details Card */
+        .patient-details {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .patient-info h4 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding: 8px 0;
+            border-bottom: 1px solid #f5f7fa;
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .info-label {
+            color: #8492a6;
+            font-size: 0.9rem;
+        }
+
+        .info-value {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .patient-tags {
+            display: flex;
+            gap: 8px;
+            margin-top: 15px;
+        }
+
+        .tag {
+            background: #f5f7fa;
+            color: #667eea;
+            padding: 4px 10px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+        }
+
+        .contact-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .action-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: #f5f7fa;
+            color: #2c3e50;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Review Progress */
+        .review-progress {
+            margin-top: 15px;
+        }
+
+        .progress-item {
+            margin-bottom: 15px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+        }
+
+        .progress-label {
+            color: #2c3e50;
+            font-weight: 500;
+        }
+
+        .progress-value {
+            color: #8492a6;
+            font-size: 0.9rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: #f5f7fa;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+
+        .progress-excellent { background: #27ae60; width: 85%; }
+        .progress-great { background: #3498db; width: 70%; }
+        .progress-good { background: #f39c12; width: 55%; }
+
+        /* Appointment Requests */
+        .request-list {
+            margin-top: 20px;
+        }
+
+        .request-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: #f5f7fa;
+            border-radius: 8px;
+            margin-bottom: 10px;
+        }
+
+        .request-info h5 {
+            color: #2c3e50;
+            margin-bottom: 5px;
+        }
+
+        .request-info p {
+            color: #8492a6;
+            font-size: 0.9rem;
+        }
+
+        .request-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .request-btn {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-accept {
+            background: #27ae60;
+            color: white;
+        }
+
+        .btn-reject {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .btn-chat {
+            background: #3498db;
+            color: white;
+        }
+
+        /* Calendar */
+        .calendar {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+        }
+
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .calendar-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 5px;
+        }
+
+        .calendar-day-header {
+            text-align: center;
+            padding: 10px;
+            font-weight: 600;
+            color: #8492a6;
+            font-size: 0.85rem;
+        }
+
+        .calendar-day {
+            aspect-ratio: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #2c3e50;
+        }
+
+        .calendar-day:hover {
+            background: #f5f7fa;
+        }
+
+        .calendar-day.today {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        .see-all-link {
+            color: #667eea;
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            display: inline-block;
+            margin-top: 15px;
+        }
+
+        .see-all-link:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .dashboard-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .chart-card {
+                grid-column: span 1;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+                transition: transform 0.3s ease;
+            }
+            
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+            }
+            
+            .content-header {
+                flex-direction: column;
+                gap: 15px;
+                align-items: stretch;
+            }
+            
+            .header-actions {
+                justify-content: space-between;
+            }
+            
+            .search-bar input {
+                width: 100%;
+            }
+            
+            .patient-details {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="doctor-profile">
+                <div class="doctor-avatar">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h3 class="doctor-name">Dr. Marttin Deo</h3>
+                <p class="doctor-qualifications">MBBS, FCPS - MD (Medicine), MCPS</p>
+            </div>
+            
+            <nav>
+                <ul class="sidebar-nav">
+                    <li><a href="#dashboard" class="active" onclick="showSection('dashboard', event)"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                    <li><a href="#appointments" onclick="showSection('appointments', event)"><i class="fas fa-calendar-check"></i> Appointment</a></li>
+                    <li><a href="#appointment-page" onclick="showSection('appointment-page', event)"><i class="fas fa-calendar-alt"></i> Appointment Page</a></li>
+                    <li><a href="#patients" onclick="showSection('patients', event)"><i class="fas fa-users"></i> Patients</a></li>
+                    <li><a href="#payment" onclick="showSection('payment', event)"><i class="fas fa-credit-card"></i> Payment</a></li>
+                    <li><a href="#profile" onclick="showSection('profile', event)"><i class="fas fa-user"></i> Profile</a></li>
+                    <li><a href="#settings" onclick="showSection('settings', event)"><i class="fas fa-cog"></i> Settings</a></li>
+                    <li><a href="#" onclick="logout()"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Content Header -->
+            <header class="content-header">
+                <h1 class="page-title">Dashboard</h1>
+                
+                <div class="header-actions">
+                    <div class="search-bar">
+                        <input type="text" placeholder="Search">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    
+                    <div class="header-icons">
+                        <button class="icon-btn">
+                            <i class="fas fa-envelope"></i>
+                        </button>
+                        <button class="icon-btn">
+                            <i class="fas fa-bell"></i>
+                            <span class="notification-badge">3</span>
+                        </button>
+                        <button class="icon-btn" onclick="toggleSidebar()">
+                            <i class="fas fa-bars"></i>
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div id="dashboard" class="content-section active">
+                <div class="dashboard-grid">
+                    <!-- Summary Cards -->
+                    <div class="card summary-card">
+                        <div class="summary-info">
+                            <h3 id="totalPatients">2000+</h3>
+                            <p>Total Patient<br>Till Today</p>
+                        </div>
+                        <div class="summary-icon icon-blue">
+                            <i class="fas fa-user-plus"></i>
+                        </div>
+                    </div>
+
+                    <div class="card summary-card">
+                        <div class="summary-info">
+                            <h3 id="todayPatients">068</h3>
+                            <p>Today Patient<br>21 Dec-2021</p>
+                        </div>
+                        <div class="summary-icon icon-green">
+                            <i class="fas fa-user-injured"></i>
+                        </div>
+                    </div>
+
+                    <div class="card summary-card">
+                        <div class="summary-info">
+                            <h3 id="todayAppointments">085</h3>
+                            <p>Today Appointments<br>21 Dec-2021</p>
+                        </div>
+                        <div class="summary-icon icon-orange">
+                            <i class="fas fa-clock"></i>
+                        </div>
+                    </div>
+
+                    <!-- Patients Summary Chart -->
+                    <div class="card chart-card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Patients Summary December 2021</h3>
+                        </div>
+                        <div class="chart-container">
+                            <div class="donut-chart">
+                                <div class="chart-center">
+                                    <h4>2000+</h4>
+                                    <p>Total</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chart-legend">
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #667eea;"></div>
+                                <span>New Patients</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #ff9ff3;"></div>
+                                <span>Old Patients</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color" style="background: #00d2d3;"></div>
+                                <span>Total Patients</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Today Appointment -->
+                    <div class="card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Today Appointment</h3>
+                        </div>
+                        <table class="appointment-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient</th>
+                                    <th>Name/Diagnosis</th>
+                                    <th>Time</th>
+                                </tr>
+                            </thead>
+                            <tbody id="todayAppointmentsList">
+                                <tr>
+                                    <td><i class="fas fa-user-circle"></i></td>
+                                    <td>M.J. Mical<br>Health Checkup</td>
+                                    <td><span class="status-badge status-ongoing">On Going</span></td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-user-circle"></i></td>
+                                    <td>Sanath Deo<br>Health Checkup</td>
+                                    <td>12:30 PM</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-user-circle"></i></td>
+                                    <td>Loeara Phanj<br>Report</td>
+                                    <td>01:00 PM</td>
+                                </tr>
+                                <tr>
+                                    <td><i class="fas fa-user-circle"></i></td>
+                                    <td>Komola Haris<br>Common Cold</td>
+                                    <td>01:30 PM</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <a href="#" class="see-all-link">See All</a>
+                    </div>
+
+                    <!-- Next Patient Details -->
+                    <div class="card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Next Patient Details</h3>
+                        </div>
+                        <div class="patient-details">
+                            <div>
+                                <h4>Patient Name: <span id="nextPatientName">Sanath Deo</span></h4>
+                                <p><strong>Diagnosis:</strong> <span id="nextPatientDiagnosis">Health Checkup</span></p>
+                                <p><strong>Patient ID:</strong> <span id="nextPatientId">0220092020005</span></p>
+                                
+                                <div class="info-row">
+                                    <span class="info-label">D.O.B:</span>
+                                    <span class="info-value" id="patientDOB">15 January 1989</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Sex:</span>
+                                    <span class="info-value" id="patientSex">Male</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Weight:</span>
+                                    <span class="info-value" id="patientWeight">59 Kg</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Last Appointment:</span>
+                                    <span class="info-value" id="patientLastAppointment">15 Dec - 2021</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Height:</span>
+                                    <span class="info-value" id="patientHeight">172 cm</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Reg. Date:</span>
+                                    <span class="info-value" id="patientRegDate">10 Dec 2021</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <h4>Patient History:</h4>
+                                <div class="patient-tags" id="patientTags">
+                                    <span class="tag">Asthma</span>
+                                    <span class="tag">Hypertension</span>
+                                    <span class="tag">Fever</span>
+                                </div>
+                                
+                                <h4 style="margin-top: 20px;">Contact</h4>
+                                <p><i class="fas fa-phone"></i> <span id="patientPhone">(308) 555-0102</span></p>
+                                
+                                <div class="contact-actions">
+                                    <button class="action-btn btn-primary" onclick="viewPatientDocument()">
+                                        <i class="fas fa-file-medical"></i> Document
+                                    </button>
+                                    <button class="action-btn btn-secondary" onclick="chatWithPatient()">
+                                        <i class="fas fa-comments"></i> Chat
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Patients Review -->
+                    <div class="card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Patients Review</h3>
+                        </div>
+                        <div class="review-progress">
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span class="progress-label">Excellent</span>
+                                    <span class="progress-value">85%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-excellent"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span class="progress-label">Great</span>
+                                    <span class="progress-value">70%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-great"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span class="progress-label">Good</span>
+                                    <span class="progress-value">55%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill progress-good"></div>
+                                </div>
+                            </div>
+                            <div class="progress-item">
+                                <div class="progress-header">
+                                    <span class="progress-label">Average</span>
+                                    <span class="progress-value">30%</span>
+                                </div>
+                                <div class="progress-bar">
+                                    <div class="progress-fill" style="width: 30%; background: #95a5a6;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Appointment Request -->
+                    <div class="card">
+                        <div class="chart-header">
+                            <h3 class="chart-title">Appointment Request</h3>
+                        </div>
+                        <div class="request-list" id="appointmentRequests">
+                            <div class="request-item">
+                                <div class="request-info">
+                                    <h5>Maria Sarafat</h5>
+                                    <p>Cold</p>
+                                </div>
+                                <div class="request-actions">
+                                    <button class="request-btn btn-accept" onclick="acceptAppointment('Maria Sarafat')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="request-btn btn-reject" onclick="rejectAppointment('Maria Sarafat')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button class="request-btn btn-chat" onclick="chatWithPatient('Maria Sarafat')">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="request-item">
+                                <div class="request-info">
+                                    <h5>Jhon Deo</h5>
+                                    <p>Over sweating</p>
+                                </div>
+                                <div class="request-actions">
+                                    <button class="request-btn btn-accept" onclick="acceptAppointment('Jhon Deo')">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                    <button class="request-btn btn-reject" onclick="rejectAppointment('Jhon Deo')">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                    <button class="request-btn btn-chat" onclick="chatWithPatient('Jhon Deo')">
+                                        <i class="fas fa-comment"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <a href="#" class="see-all-link">See All</a>
+                    </div>
+
+                    <!-- Calendar -->
+                    <div class="card calendar">
+                        <div class="calendar-header">
+                            <h3 class="calendar-title">December - 2021</h3>
+                        </div>
+                        <div class="calendar-grid">
+                            <div class="calendar-day-header">Sun</div>
+                            <div class="calendar-day-header">Mon</div>
+                            <div class="calendar-day-header">Tue</div>
+                            <div class="calendar-day-header">Wed</div>
+                            <div class="calendar-day-header">Thu</div>
+                            <div class="calendar-day-header">Fri</div>
+                            <div class="calendar-day-header">Sat</div>
+                            
+                            <!-- Calendar Days -->
+                            <div class="calendar-day">28</div>
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day">30</div>
+                            <div class="calendar-day">1</div>
+                            <div class="calendar-day">2</div>
+                            <div class="calendar-day">3</div>
+                            <div class="calendar-day">4</div>
+                            <div class="calendar-day">5</div>
+                            <div class="calendar-day">6</div>
+                            <div class="calendar-day">7</div>
+                            <div class="calendar-day">8</div>
+                            <div class="calendar-day">9</div>
+                            <div class="calendar-day">10</div>
+                            <div class="calendar-day">11</div>
+                            <div class="calendar-day">12</div>
+                            <div class="calendar-day">13</div>
+                            <div class="calendar-day">14</div>
+                            <div class="calendar-day">15</div>
+                            <div class="calendar-day">16</div>
+                            <div class="calendar-day">17</div>
+                            <div class="calendar-day">18</div>
+                            <div class="calendar-day">19</div>
+                            <div class="calendar-day">20</div>
+                            <div class="calendar-day today">21</div>
+                            <div class="calendar-day">22</div>
+                            <div class="calendar-day">23</div>
+                            <div class="calendar-day">24</div>
+                            <div class="calendar-day">25</div>
+                            <div class="calendar-day">26</div>
+                            <div class="calendar-day">27</div>
+                            <div class="calendar-day">28</div>
+                            <div class="calendar-day">29</div>
+                            <div class="calendar-day">30</div>
+                            <div class="calendar-day">31</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Appointments Section -->
+            <div id="appointments" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">All Appointments</h3>
+                    </div>
+                    <table class="appointment-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Diagnosis</th>
+                                <th>Time</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>21 Dec 2021</td>
+                                <td>M.J. Mical</td>
+                                <td>Health Checkup</td>
+                                <td>11:00 AM</td>
+                                <td><span class="status-badge status-ongoing">On Going</span></td>
+                            </tr>
+                            <tr>
+                                <td>21 Dec 2021</td>
+                                <td>Sanath Deo</td>
+                                <td>Health Checkup</td>
+                                <td>12:30 PM</td>
+                                <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                            </tr>
+                            <tr>
+                                <td>21 Dec 2021</td>
+                                <td>Loeara Phanj</td>
+                                <td>Report</td>
+                                <td>01:00 PM</td>
+                                <td><span class="status-badge status-scheduled">Scheduled</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Appointment Page Section -->
+            <div id="appointment-page" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Appointment Management</h3>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4>Schedule New Appointment</h4>
+                        <form style="margin-top: 20px;">
+                            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 20px;">
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Patient Name</label>
+                                    <input type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Date</label>
+                                    <input type="date" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Time</label>
+                                    <input type="time" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                </div>
+                                <div>
+                                    <label style="display: block; margin-bottom: 5px; font-weight: 500;">Diagnosis</label>
+                                    <input type="text" style="width: 100%; padding: 10px; border: 1px solid #ddd; border-radius: 5px;">
+                                </div>
+                            </div>
+                            <button type="submit" class="action-btn btn-primary">Schedule Appointment</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Patients Section -->
+            <div id="patients" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">All Patients</h3>
+                    </div>
+                    <table class="appointment-table">
+                        <thead>
+                            <tr>
+                                <th>Patient ID</th>
+                                <th>Name</th>
+                                <th>Contact</th>
+                                <th>Last Visit</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>PAT-123456</td>
+                                <td>M.J. Mical</td>
+                                <td>(308) 555-0101</td>
+                                <td>15 Dec 2021</td>
+                                <td>
+                                    <button class="action-btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PAT-789012</td>
+                                <td>Sanath Deo</td>
+                                <td>(308) 555-0102</td>
+                                <td>15 Dec 2021</td>
+                                <td>
+                                    <button class="action-btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>PAT-345678</td>
+                                <td>Loeara Phanj</td>
+                                <td>(308) 555-0103</td>
+                                <td>10 Dec 2021</td>
+                                <td>
+                                    <button class="action-btn btn-primary" style="padding: 5px 10px; font-size: 0.8rem;">View</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Payment Section -->
+            <div id="payment" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Payment History</h3>
+                    </div>
+                    <table class="appointment-table">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Patient</th>
+                                <th>Service</th>
+                                <th>Amount</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>20 Dec 2021</td>
+                                <td>M.J. Mical</td>
+                                <td>Consultation</td>
+                                <td>$150</td>
+                                <td><span style="color: #27ae60;">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>19 Dec 2021</td>
+                                <td>Sanath Deo</td>
+                                <td>Health Checkup</td>
+                                <td>$200</td>
+                                <td><span style="color: #27ae60;">Paid</span></td>
+                            </tr>
+                            <tr>
+                                <td>18 Dec 2021</td>
+                                <td>Loeara Phanj</td>
+                                <td>Report</td>
+                                <td>$50</td>
+                                <td><span style="color: #f39c12;">Pending</span></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Profile Section -->
+            <div id="profile" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Doctor Profile</h3>
+                    </div>
+                    <div style="padding: 20px;">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px;">
+                            <div>
+                                <h4>Personal Information</h4>
+                                <div class="info-row">
+                                    <span class="info-label">Full Name:</span>
+                                    <span class="info-value">Dr. Marttin Deo</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Specialty:</span>
+                                    <span class="info-value">Medicine</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Email:</span>
+                                    <span class="info-value">doctor@medicare.com</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Phone:</span>
+                                    <span class="info-value">(308) 555-0123</span>
+                                </div>
+                            </div>
+                            <div>
+                                <h4>Professional Details</h4>
+                                <div class="info-row">
+                                    <span class="info-label">License:</span>
+                                    <span class="info-value">MD-2021-1234</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Experience:</span>
+                                    <span class="info-value">10+ Years</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Department:</span>
+                                    <span class="info-value">Internal Medicine</span>
+                                </div>
+                                <div class="info-row">
+                                    <span class="info-label">Hospital:</span>
+                                    <span class="info-value">MediCare Hospital</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Settings Section -->
+            <div id="settings" class="content-section">
+                <div class="card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">Settings</h3>
+                    </div>
+                    <div style="padding: 20px;">
+                        <h4>Notification Settings</h4>
+                        <div style="margin: 20px 0;">
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox" checked> Email notifications for new appointments
+                            </label>
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox" checked> SMS notifications for urgent cases
+                            </label>
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox"> Daily summary reports
+                            </label>
+                        </div>
+                        
+                        <h4>Appointment Settings</h4>
+                        <div style="margin: 20px 0;">
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox" checked> Auto-confirm appointments
+                            </label>
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox"> Allow same-day appointments
+                            </label>
+                            <label style="display: block; margin: 10px 0;">
+                                <input type="checkbox" checked> Send reminders to patients
+                            </label>
+                        </div>
+                        
+                        <button class="action-btn btn-primary">Save Settings</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Load doctor data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadDoctorData();
+            setupInteractions();
+            loadPatientData();
+            updateStatistics();
+        });
+
+        function loadDoctorData() {
+            const doctorName = sessionStorage.getItem('userName') || 'Marttin Deo';
+            const doctorSpecialty = sessionStorage.getItem('userSpecialty') || 'Medicine';
+            
+            // Update doctor profile in sidebar
+            const doctorNameElements = document.querySelectorAll('.doctor-name');
+            doctorNameElements.forEach(el => {
+                el.textContent = 'Dr. ' + doctorName;
+            });
+        }
+
+        function showSection(sectionId, event) {
+            if (event) {
+                event.preventDefault();
+            }
+            
+            // Update navigation
+            document.querySelectorAll('.sidebar-nav a').forEach(link => {
+                link.classList.remove('active');
+            });
+            event.target.classList.add('active');
+            
+            // Hide all sections
+            document.querySelectorAll('.content-section').forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            // Show selected section
+            const targetSection = document.getElementById(sectionId);
+            if (targetSection) {
+                targetSection.classList.add('active');
+            }
+        }
+
+        function loadPatientData() {
+            // Load patients from patient portal (simulated data)
+            const patients = JSON.parse(sessionStorage.getItem('registeredPatients') || '[]');
+            
+            // Update today's appointments
+            const todayAppointments = [
+                { name: 'M.J. Mical', diagnosis: 'Health Checkup', time: 'On Going', status: 'ongoing' },
+                { name: 'Sanath Deo', diagnosis: 'Health Checkup', time: '12:30 PM', status: 'scheduled' },
+                { name: 'Loeara Phanj', diagnosis: 'Report', time: '01:00 PM', status: 'scheduled' },
+                { name: 'Komola Haris', diagnosis: 'Common Cold', time: '01:30 PM', status: 'scheduled' }
+            ];
+            
+            // Update appointment list
+            const appointmentsList = document.getElementById('todayAppointmentsList');
+            if (appointmentsList) {
+                appointmentsList.innerHTML = todayAppointments.map(apt => `
+                    <tr>
+                        <td><i class="fas fa-user-circle"></i></td>
+                        <td>${apt.name}<br>${apt.diagnosis}</td>
+                        <td>${apt.status === 'ongoing' ? '<span class="status-badge status-ongoing">On Going</span>' : apt.time}</td>
+                    </tr>
+                `).join('');
+            }
+            
+            // Update next patient details with first appointment
+            if (todayAppointments.length > 0) {
+                const nextPatient = todayAppointments.find(apt => apt.status === 'scheduled') || todayAppointments[0];
+                updateNextPatientDetails(nextPatient);
+            }
+            
+            // Update appointment requests
+            const requests = [
+                { name: 'Maria Sarafat', diagnosis: 'Cold' },
+                { name: 'Jhon Deo', diagnosis: 'Over sweating' }
+            ];
+            
+            updateAppointmentRequests(requests);
+        }
+
+        function updateNextPatientDetails(patient) {
+            document.getElementById('nextPatientName').textContent = patient.name;
+            document.getElementById('nextPatientDiagnosis').textContent = patient.diagnosis;
+            document.getElementById('nextPatientId').textContent = 'PAT' + Date.now().toString().slice(-6);
+            document.getElementById('patientDOB').textContent = '15 January 1989';
+            document.getElementById('patientSex').textContent = 'Male';
+            document.getElementById('patientWeight').textContent = '59 Kg';
+            document.getElementById('patientHeight').textContent = '172 cm';
+            document.getElementById('patientLastAppointment').textContent = '15 Dec - 2021';
+            document.getElementById('patientRegDate').textContent = '10 Dec 2021';
+            document.getElementById('patientPhone').textContent = '(308) 555-0102';
+            
+            // Update patient tags
+            const tags = ['Asthma', 'Hypertension', 'Fever'];
+            const tagsContainer = document.getElementById('patientTags');
+            tagsContainer.innerHTML = tags.map(tag => `<span class="tag">${tag}</span>`).join('');
+        }
+
+        function updateAppointmentRequests(requests) {
+            const requestsContainer = document.getElementById('appointmentRequests');
+            if (requestsContainer) {
+                requestsContainer.innerHTML = requests.map(req => `
+                    <div class="request-item">
+                        <div class="request-info">
+                            <h5>${req.name}</h5>
+                            <p>${req.diagnosis}</p>
+                        </div>
+                        <div class="request-actions">
+                            <button class="request-btn btn-accept" onclick="acceptAppointment('${req.name}')">
+                                <i class="fas fa-check"></i>
+                            </button>
+                            <button class="request-btn btn-reject" onclick="rejectAppointment('${req.name}')">
+                                <i class="fas fa-times"></i>
+                            </button>
+                            <button class="request-btn btn-chat" onclick="chatWithPatient('${req.name}')">
+                                <i class="fas fa-comment"></i>
+                            </button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+        }
+
+        function updateStatistics() {
+            // Simulate real-time updates
+            const totalPatients = 2000 + Math.floor(Math.random() * 100);
+            const todayPatients = 68 + Math.floor(Math.random() * 20);
+            const todayAppointments = 85 + Math.floor(Math.random() * 15);
+            
+            document.getElementById('totalPatients').textContent = totalPatients + '+';
+            document.getElementById('todayPatients').textContent = todayPatients;
+            document.getElementById('todayAppointments').textContent = todayAppointments;
+        }
+
+        function setupInteractions() {
+            // Handle appointment requests
+            document.querySelectorAll('.request-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    if (this.classList.contains('btn-accept')) {
+                        alert('Appointment accepted!');
+                    } else if (this.classList.contains('btn-reject')) {
+                        alert('Appointment rejected!');
+                    } else if (this.classList.contains('btn-chat')) {
+                        alert('Opening chat with patient...');
+                    }
+                });
+            });
+
+            // Handle calendar day clicks
+            document.querySelectorAll('.calendar-day').forEach(day => {
+                day.addEventListener('click', function() {
+                    document.querySelectorAll('.calendar-day').forEach(d => d.classList.remove('today'));
+                    this.classList.add('today');
+                });
+            });
+        }
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function acceptAppointment(patientName) {
+            alert(`Appointment accepted for ${patientName}!`);
+            // Remove from requests and add to appointments
+            loadPatientData(); // Refresh data
+        }
+
+        function rejectAppointment(patientName) {
+            alert(`Appointment rejected for ${patientName}!`);
+            // Remove from requests
+            loadPatientData(); // Refresh data
+        }
+
+        function chatWithPatient(patientName) {
+            alert(`Opening chat with ${patientName}...`);
+            // In real app, this would open chat interface
+        }
+
+        function viewPatientDocument() {
+            const patientName = document.getElementById('nextPatientName').textContent;
+            alert(`Opening medical documents for ${patientName}...`);
+            // In real app, this would open patient documents
+        }
+
+        function logout() {
+            sessionStorage.clear();
+            window.location.href = 'dashboard.html';
+        }
+
+        // Simulate real-time updates
+        setInterval(() => {
+            updateStatistics();
+            
+            // Update notification badge
+            const badge = document.querySelector('.notification-badge');
+            if (badge) {
+                const currentCount = parseInt(badge.textContent);
+                badge.textContent = Math.floor(Math.random() * 10);
+            }
+        }, 30000); // Update every 30 seconds
+    </script>
+</body>
+</html>
